@@ -49,7 +49,14 @@
             placeholder="Short Description"
           />
         </div>
-        <AppButton class="p-button-lg" label="Generate" @click="generate" />
+        <AppButton
+          class="p-button-lg w-full flex align-items-center justify-content-center h-4rem"
+          :disabled="isLoading"
+          @click="generate"
+        >
+          <i v-if="isLoading" class="pi pi-spin pi-spinner" />
+          <span v-if="!isLoading" class="px-3 font-bold">Generate</span>
+        </AppButton>
       </div>
     </div>
     <div

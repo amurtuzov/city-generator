@@ -40,15 +40,20 @@ export const useApiCall = <T, K, V = undefined>(
       requestStatus.value = RequestStatus.SUCCESS
       abortController = null
     } catch (e: unknown) {
-      requestStatus.value = RequestStatus.FAILED
       const axiosError = e as AxiosError<K>
-      const status = axiosError.response?.status
-      const response = axiosError.response
-      if (response) {
-        error.value = { status, data: adaptResponseForClient<K>(response.data) }
-      }
-      if (externalCall) {
-        throw new Error('Error for external call catch')
+      if (axiosError.code !== 'ERR_CANCELED') {
+        requestStatus.value = RequestStatus.FAILED
+        const status = axiosError.response?.status
+        const response = axiosError.response
+        if (response) {
+          error.value = {
+            status,
+            data: adaptResponseForClient<K>(response.data),
+          }
+        }
+        if (externalCall) {
+          throw new Error('Error for external call catch')
+        }
       }
     }
   }
