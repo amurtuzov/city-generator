@@ -1,5 +1,4 @@
 import MainLayout from '@/layouts/MainLayout/MainLayout.vue'
-import AuthLayout from '@/layouts/AuthLayout/AuthLayout.vue'
 import { computed, defineComponent, onMounted, onUnmounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { useMainStore } from '@/store/main'
@@ -8,7 +7,6 @@ export default defineComponent({
   name: 'App',
   components: {
     MainLayout,
-    AuthLayout,
   },
   setup() {
     const route = useRoute()

@@ -1,4 +1,4 @@
-import { defineComponent, ref, onBeforeMount, watch, Ref } from 'vue'
+import { defineComponent, ref, watch, Ref, defineAsyncComponent } from 'vue'
 import { ComponentPublicInstance } from '@/types/svgIcon'
 
 export default defineComponent({
@@ -7,30 +7,16 @@ export default defineComponent({
   },
   emits: ['iconReady'],
   setup(props, { emit }) {
-    const dynamicSvg = ref<string | null>(null)
-    const svgRef = ref(null) as Ref<ComponentPublicInstance<HTMLElement> | null>
-
-    const importSvg = async (svgName: string) => {
-      if (svgName) {
-        return await import(`../../assets/icons/${svgName}.svg`)
-      }
-    }
-
-    watch(
-      () => props.icon,
-      async (svg) => (dynamicSvg.value = await importSvg(svg)),
+    const dynamicSvg = defineAsyncComponent(
+      () => import(`../../assets/icons/${props.icon}.svg`),
     )
-
+    const svgRef = ref(null) as Ref<ComponentPublicInstance<HTMLElement> | null>
     watch(
       () => svgRef.value?.$el,
       () => {
         emit('iconReady')
       },
     )
-
-    onBeforeMount(async () => {
-      dynamicSvg.value = await importSvg(props.icon)
-    })
     return {
       dynamicSvg,
       svgRef,

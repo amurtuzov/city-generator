@@ -6,7 +6,7 @@ const routes: Array<RouteRecordRaw> = [
     name: 'not-found',
     component: () => import('@/views/ErrorPage/ErrorPage.vue'),
     meta: {
-      layout: 'Simple',
+      layout: 'Main',
     },
   },
   {

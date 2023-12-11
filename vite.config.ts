@@ -9,7 +9,7 @@ import { fileURLToPath, URL } from 'node:url'
 export default ({ mode }: { mode: string }) => {
   process.env = { ...process.env, ...loadEnv(mode, process.cwd()) }
   return defineConfig({
-    base: mode === 'gh' ? '/city-generator/' : '',
+    base: mode === 'gh' ? '/city-generator/' : '/',
     plugins: [
       vue(),
       svgLoader(),
@@ -18,6 +18,11 @@ export default ({ mode }: { mode: string }) => {
       }),
       eslintPlugin(),
     ],
+    css: {
+      preprocessorOptions: {
+        scss: { additionalData: `@import "@/assets/styles/main";` },
+      },
+    },
     define: {
       APP_VERSION: JSON.stringify(process.env.npm_package_version),
     },

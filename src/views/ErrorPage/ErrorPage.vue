@@ -10,4 +10,3 @@
 </template>
 
 <script lang="ts" src="./ErrorPage.ts"></script>
-<style lang="scss" scoped src="./ErrorPage.scss"></style>
