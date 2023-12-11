@@ -39,6 +39,13 @@ export default ({ mode }: { mode: string }) => {
       hmr: {
         host: 'localhost',
       },
+      proxy: {
+        '/ai/': {
+          target: 'https://namegenerator.com',
+          changeOrigin: true,
+          secure: false,
+        },
+      },
     },
     test: {
       // silent: true,

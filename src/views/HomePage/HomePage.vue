@@ -17,29 +17,39 @@
       <div class="home__form-wrapper w-full flex flex-column gap-5">
         <div class="flex flex-column lg:flex-row gap-5">
           <Dropdown
-            v-model="selectedCity"
-            :options="cities"
-            optionLabel="name"
-            placeholder="Select a City"
+            v-model="params.size"
+            :options="sizes"
+            placeholder="Size or Significance"
             class="flex-grow-1 h-4rem align-items-center"
           />
           <Dropdown
-            v-model="selectedCity"
-            :options="cities"
-            optionLabel="name"
-            placeholder="Select a City"
+            v-model="params.terrain"
+            :options="terrains"
+            placeholder="Terrain Type"
             class="flex-grow-1 h-4rem align-items-center"
+            @change="
+              () => {
+                console.log(params)
+              }
+            "
           />
         </div>
         <div class="flex gap-5 flex-column w-full">
-          <InputText size="large" class="flex align-items-center h-4rem" />
+          <InputText
+            v-model="params.keywords"
+            size="large"
+            class="flex align-items-center h-4rem"
+            placeholder="Inspiration Keywords"
+          />
           <TextAreaComponent
+            v-model="params.description"
             autoResize
             class="flex align-items-center"
             rows="5"
+            placeholder="Short Description"
           />
         </div>
-        <AppButton class="p-button-lg" label="Generate" />
+        <AppButton class="p-button-lg" label="Generate" @click="generate" />
       </div>
     </div>
     <div

@@ -1,8 +1,10 @@
-import { defineComponent, ref } from 'vue'
+import { defineComponent, reactive } from 'vue'
 import { default as AppButton } from 'primevue/button'
 import Dropdown from 'primevue/dropdown'
 import InputText from 'primevue/inputtext'
 import { default as TextAreaComponent } from 'primevue/textarea'
+import { useApiCall } from '@/composables/useApiCall'
+import { citiesApiCall } from '@/api/example'
 
 export default defineComponent({
   name: 'HomePage',
@@ -13,18 +15,50 @@ export default defineComponent({
     TextAreaComponent,
   },
   setup() {
-    const selectedCity = ref()
-    const cities = ref([
-      { name: 'New York', code: 'NY' },
-      { name: 'Rome', code: 'RM' },
-      { name: 'London', code: 'LDN' },
-      { name: 'Istanbul', code: 'IST' },
-      { name: 'Paris', code: 'PRS' },
-    ])
+    const params = reactive({
+      size: 'Small Town',
+      terrain: 'Coastal',
+      keywords: 'elvish, dwarfish, femenine, light',
+      description:
+        'It is a hidden city in forested mountains in a fictional country, with a mixed dwarf-elf cultural influence.',
+    })
+    const {
+      data,
+      isLoading,
+      error,
+      executeApiCall: generateAction,
+    } = useApiCall(citiesApiCall, true, params)
+    const sizes = [
+      'Small Town',
+      'Medium Town',
+      'Large City',
+      'Metropolis',
+      'Capital City',
+    ]
+    const terrains = [
+      'Coastal',
+      'Riverine',
+      'Mountainous',
+      'Forested',
+      'Desert',
+      'Plains',
+    ]
+
+    const generate = async () => {
+      try {
+        await generateAction()
+        console.log(data, error)
+      } catch (e) {
+        console.error(e)
+      }
+    }
 
     return {
-      selectedCity,
-      cities,
+      params,
+      sizes,
+      terrains,
+      isLoading,
+      generate,
     }
   },
 })

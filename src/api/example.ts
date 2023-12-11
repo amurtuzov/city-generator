@@ -5,7 +5,7 @@ const citiesApiCall = async (
   params?: any,
 ): Promise<any> => {
   const { data } = await axios.post(
-    '/example/',
+    '/ai/generate/city-names',
     { ...params },
     { signal: abortController?.signal },
   )
