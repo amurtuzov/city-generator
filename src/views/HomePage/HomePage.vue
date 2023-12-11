@@ -3,7 +3,7 @@
     <div
       class="auth__title hover:text-pink-200 transition-all transition-duration-200"
     >
-      {{ 1244444 }}
+      {{ 12444445555555 }}
     </div>
     <div class="auth__title">{{ version }}</div>
     <div
