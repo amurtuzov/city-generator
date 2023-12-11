@@ -10,7 +10,7 @@
     "build-gh": "vue-tsc --noEmit && vite build --mode gh",
     "preview": "vite preview",
     "typecheck": "vue-tsc --noEmit",
-    "lint": "eslint --ext .js,.ts,.vue, --ignore-path .gitignore --fix src",
+    "lint": "eslint --ext .js,.ts,.vue, --ignore-path .eslintignore --fix src",
     "kill": "lsof -t -i tcp:3000,8080 | xargs kill -9",
     "test": "vitest run",
     "version-update": "yarn config set version-git-tag false && yarn version --new-version $VERSION && git push --tags &&  git add . && git commit -m \"version update\" && git push && echo \"Successfully released version: $VERSION\"",
