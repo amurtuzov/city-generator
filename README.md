@@ -1,4 +1,4 @@
-# VUE TS Prime/Vuetify Boilerplate
+# VUE TS PrimeVue City names generator
 
 ## Node - >= 18
 
