@@ -7,6 +7,7 @@
   "scripts": {
     "serve": "vite",
     "build": "vue-tsc --noEmit && vite build",
+    "build-gh": "vue-tsc --noEmit && vite build --mode gh",
     "preview": "vite preview",
     "typecheck": "vue-tsc --noEmit",
     "lint": "eslint --ext .js,.ts,.vue, --ignore-path .gitignore --fix src",
