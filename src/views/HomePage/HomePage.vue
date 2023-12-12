@@ -14,49 +14,86 @@
     <div
       class="home__form w-full grid grid-nogutter col-12 justify-content-center mb-8"
     >
-      <div class="home__form-wrapper w-full flex flex-column gap-5">
-        <div class="flex flex-column lg:flex-row gap-5">
-          <Dropdown
-            v-model="params.size"
-            :options="sizes"
-            placeholder="Size or Significance"
-            class="flex-grow-1 h-4rem align-items-center"
-          />
-          <Dropdown
-            v-model="params.terrain"
-            :options="terrains"
-            placeholder="Terrain Type"
-            class="flex-grow-1 h-4rem align-items-center"
-            @change="
-              () => {
-                console.log(params)
-              }
-            "
-          />
+      <div class="home__form-wrapper w-full flex flex-column gap-3">
+        <div
+          class="flex flex-column gap-6 lg:flex-row lg:justify-content-between mb-4"
+        >
+          <div class="p-float-label lg:w-6">
+            <Dropdown
+              v-model="params.size"
+              :options="sizes"
+              inputId="sizes"
+              class="align-items-center w-full h-4rem"
+            />
+            <label for="sizes">Size or Significance</label>
+          </div>
+          <div class="p-float-label lg:w-6">
+            <Dropdown
+              v-model="params.terrain"
+              :options="terrains"
+              inputId="terrain"
+              class="align-items-center w-full h-4rem"
+            />
+            <label for="terrain">Terrain Type</label>
+          </div>
         </div>
-        <div class="flex gap-5 flex-column w-full">
-          <InputText
-            v-model="params.keywords"
-            size="large"
-            class="flex align-items-center h-4rem"
-            placeholder="Inspiration Keywords"
-          />
-          <TextAreaComponent
-            v-model="params.description"
-            autoResize
-            class="flex align-items-center"
-            rows="5"
-            placeholder="Short Description"
-          />
+        <div class="flex gap-3 flex-column w-full">
+          <div class="w-full">
+            <div class="p-float-label">
+              <InputText
+                v-model="params.keywords"
+                class="flex align-items-center h-4rem w-full mb-1"
+                :class="{ 'p-invalid': errorMessages.keywords }"
+                inputId="keywords"
+                @input="textFieldsLatinLettersCheck('keywords')"
+              />
+              <label for="keywords">Inspiration Keywords</label>
+            </div>
+            <small class="p-error">
+              {{ errorMessages.keywords || '&nbsp;' }}
+            </small>
+          </div>
+          <div class="w-full">
+            <div class="p-float-label">
+              <TextAreaComponent
+                v-model="params.description"
+                autoResize
+                class="flex align-items-center w-full mb-1"
+                :class="{ 'p-invalid': errorMessages.description }"
+                rows="5"
+                inputId="description"
+                @input="textFieldsLatinLettersCheck('description')"
+              />
+              <label for="description">Short Description</label>
+            </div>
+            <small class="p-error">
+              {{ errorMessages.description || '&nbsp;' }}
+            </small>
+          </div>
         </div>
         <AppButton
           class="p-button-lg w-full flex align-items-center justify-content-center h-4rem"
-          :disabled="isLoading"
+          :disabled="isLoading || !isValid"
           @click="generate"
         >
           <i v-if="isLoading" class="pi pi-spin pi-spinner" />
           <span v-if="!isLoading" class="px-3 font-bold">Generate</span>
         </AppButton>
+      </div>
+    </div>
+    <div
+      v-if="data && data.result && data.result.length"
+      class="home__list m-auto pb-8 flex flex-column gap-5 col-12"
+    >
+      <div class="home__list-header"></div>
+      <div class="flex flex-column gap-3">
+        <div
+          v-for="item in data.result"
+          :key="item"
+          class="p-3 bg-primary-100 border-round text-gray-900"
+        >
+          {{ item }}
+        </div>
       </div>
     </div>
     <div
@@ -137,7 +174,8 @@
       }
     }
   }
-  &__how {
+  &__how,
+  &__list {
     max-width: 1000px;
   }
 }
