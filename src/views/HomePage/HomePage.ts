@@ -1,8 +1,10 @@
-import { computed, defineComponent, reactive } from 'vue'
+import { computed, defineComponent, nextTick, reactive, ref } from 'vue'
 import { default as AppButton } from 'primevue/button'
 import Dropdown from 'primevue/dropdown'
 import InputText from 'primevue/inputtext'
 import { default as TextAreaComponent } from 'primevue/textarea'
+import ListItem from '@/components/ListItem/ListItem.vue'
+import FavoritesToggler from '@/components/FavoritesToggler/FavoritesToggler.vue'
 import { useApiCall } from '@/composables/useApiCall'
 import { citiesApiCall } from '@/api/citiesApiCall'
 
@@ -13,6 +15,8 @@ export default defineComponent({
     InputText,
     Dropdown,
     TextAreaComponent,
+    ListItem,
+    FavoritesToggler,
   },
   setup() {
     const sizes = [
@@ -30,7 +34,8 @@ export default defineComponent({
       'Desert',
       'Plains',
     ]
-
+    const generatedItemsListRef = ref<HTMLElement>()
+    const generatedItems = ref<Array<string>>([])
     const params = reactive({
       size: '',
       terrain: '',
@@ -53,13 +58,12 @@ export default defineComponent({
     const {
       data,
       isLoading,
-      error,
       executeApiCall: generateAction,
-    } = useApiCall<{ result: Array<string> }, { error: string }, typeof params>(
-      citiesApiCall,
-      true,
-      params,
-    )
+    } = useApiCall<
+      { result: Array<string> },
+      Record<string, unknown>,
+      typeof params
+    >(citiesApiCall, true, params)
 
     const textFieldsLatinLettersCheck = (fieldType: string) => {
       const re = /^[A-Za-z0-9\s,]+$/
@@ -77,14 +81,19 @@ export default defineComponent({
     const generate = async () => {
       try {
         await generateAction()
-        console.log(data, error)
+        if (data.value && data.value.result && data.value.result.length) {
+          generatedItems.value = [...data.value.result]
+        }
+        await nextTick()
+        generatedItemsListRef.value?.scrollIntoView({ behavior: 'smooth' })
       } catch (e) {
         console.error(e)
       }
     }
 
     return {
-      data,
+      generatedItemsListRef,
+      generatedItems,
       params,
       sizes,
       terrains,

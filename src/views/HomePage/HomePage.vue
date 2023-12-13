@@ -82,19 +82,33 @@
       </div>
     </div>
     <div
-      v-if="data && data.result && data.result.length"
+      v-if="generatedItems.length"
       class="home__list m-auto pb-8 flex flex-column gap-5 col-12"
+      ref="generatedItemsListRef"
     >
-      <div class="home__list-header"></div>
-      <div class="flex flex-column gap-3">
-        <div
-          v-for="item in data.result"
-          :key="item"
-          class="p-3 bg-primary-100 border-round text-gray-900"
-        >
-          {{ item }}
+      <div class="flex align-items-center justify-content-between">
+        <div class="text-lg font-bold">
+          <span class="text-primary">10000+&nbsp;</span>
+          <span>items in our database</span>
         </div>
+        <FavoritesToggler />
       </div>
+      <div class="flex flex-column gap-3">
+        <ListItem v-for="item in generatedItems" :key="item" :item="item" />
+      </div>
+      <AppButton
+        class="p-button-lg flex align-items-center justify-content-center h-3rem m-auto mt-2"
+        :disabled="isLoading"
+        @click="generate"
+        :pt="{
+          root: {
+            style: { width: '280px' },
+          },
+        }"
+      >
+        <i v-if="isLoading" class="pi pi-spin pi-spinner" />
+        <span v-if="!isLoading" class="px-3 font-bold">Generate more</span>
+      </AppButton>
     </div>
     <div
       class="home__how text-gray-900 grid grid-nogutter m-auto text-lg line-height-3 pt-8 border-top-1 border-primary"

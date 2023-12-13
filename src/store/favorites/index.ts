@@ -5,18 +5,18 @@ import {
   setStorageItemWithExpiry,
 } from '@/helpers/localStorageHelpers'
 
-export const useFavouritesStore = defineStore('favourites', () => {
-  const favourites = ref<Array<string>>(
-    getStorageItemWithExpiry('favourites') || [],
+export const useFavoritesStore = defineStore('favorites', () => {
+  const favorites = ref<Array<string>>(
+    getStorageItemWithExpiry('favorites') || [],
   )
 
   watch(
-    () => favourites.value,
+    () => favorites.value,
     () => {
-      setStorageItemWithExpiry('favourites', favourites.value)
+      setStorageItemWithExpiry('favorites', favorites.value)
     },
   )
   return {
-    favourites,
+    favorites,
   }
 })

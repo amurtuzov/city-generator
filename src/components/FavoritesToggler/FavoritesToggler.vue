@@ -17,7 +17,13 @@
         :class="{ 'rotate-180': isSavedIdeasOpen }"
       />
     </AppButton>
-    <OverlayPanel ref="overlayPanelRef" :style="{ width: '400px' }">
+    <OverlayPanel
+      ref="overlayPanelRef"
+      :style="{ width: '400px', height: '400px' }"
+      :pt="{
+        content: 'p-2 h-full flex flex-column gap-2 max-h-full',
+      }"
+    >
       <FavoritesItems />
     </OverlayPanel>
   </div>
@@ -30,6 +36,11 @@
     :modal="true"
     :draggable="false"
     dismissableMask
+    :pt="{
+      header: 'p-3',
+      content:
+        'flex flex-column justify-content-between flex-grow-1 pr-3 pl-3 pb-3 gap-4',
+    }"
   >
     <FavoritesItems />
   </AppDialog>

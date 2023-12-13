@@ -6,6 +6,7 @@ import { default as AppBadge } from 'primevue/badge'
 import { useMainStore } from '@/store/main'
 import FavoritesItems from '@/components/FavoritesItems/FavoritesItems.vue'
 import { useFavoritesStore } from '@/store/favorites'
+import { storeToRefs } from 'pinia'
 
 export default defineComponent({
   name: 'FavoritesToggler',
@@ -18,7 +19,8 @@ export default defineComponent({
   },
   setup() {
     const mainStore = useMainStore()
-    const { favorites } = useFavoritesStore()
+    const favoritesStore = useFavoritesStore()
+    const { favorites } = storeToRefs(favoritesStore)
     const overlayPanelRef = ref<OverlayPanel & { visible: true }>()
     const dialogVisibility = ref(false)
 

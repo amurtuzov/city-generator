@@ -1,22 +1,22 @@
 import { defineStore } from 'pinia'
-import { RootGetters, RootState } from '@/store/main/types'
+import { computed, ref } from 'vue'
 import { Breakpoints } from '@/enum/Breakpoints'
 
-export const useMainStore = defineStore<string, RootState, RootGetters>(
-  'main',
-  {
-    state: () => {
-      return {
-        windowWidth: window.innerWidth,
-      }
-    },
+export const useMainStore = defineStore('main', () => {
+  const windowWidth = ref(window.innerWidth)
 
-    getters: {
-      isMobile: (state: RootState) => state.windowWidth < Breakpoints.TABLET,
-      isTablet: (state: RootState) =>
-        state.windowWidth >= Breakpoints.TABLET &&
-        state.windowWidth < Breakpoints.DESKTOP,
-      isDesktop: (state: RootState) => state.windowWidth >= Breakpoints.DESKTOP,
-    },
-  },
-)
+  const isMobile = computed(() => windowWidth.value < Breakpoints.TABLET)
+  const isTablet = computed(
+    () =>
+      windowWidth.value >= Breakpoints.TABLET &&
+      windowWidth.value < Breakpoints.DESKTOP,
+  )
+  const isDesktop = computed(() => windowWidth.value >= Breakpoints.DESKTOP)
+
+  return {
+    windowWidth,
+    isMobile,
+    isTablet,
+    isDesktop,
+  }
+})
