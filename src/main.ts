@@ -6,15 +6,14 @@ import '@/plugins/axios'
 const pinia = createPinia()
 const app = createApp(App)
 import globalComponents from '@/plugins/globalComponents'
-// import vuetify from '@/plugins/vuetify'
-import PrimeVue from '@/plugins/prime'
+import { PrimeVue, ConfirmationService } from '@/plugins/prime'
 
 globalComponents(app)
 
 async function initApp() {
   app.use(pinia)
-  // app.use(vuetify)
   app.use(PrimeVue, { ripple: true })
+  app.use(ConfirmationService)
   // some logic with store data before mount
   app.use(router).mount('#app')
 }

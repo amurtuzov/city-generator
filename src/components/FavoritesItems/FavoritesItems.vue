@@ -26,11 +26,21 @@
             favorites
           />
         </template>
-        <div v-else class="m-auto font-bold text-gray-900">No saved ideas</div>
+        <div v-else class="m-auto font-bold text-gray-900 border-round-top-sm">
+          No saved ideas
+        </div>
       </div>
     </ScrollPanel>
   </div>
   <div class="flex justify-content-between flex-shrink-0">
+    <ConfirmDialog
+      style="width: 300px"
+      :pt="{
+        header: 'hidden',
+        content: 'p-4 border-round-top-md',
+        message: 'w-full m-auto text-center',
+      }"
+    />
     <AppButton
       class="p-button-lg w-full h-3rem text-base w-5"
       label="Download"
@@ -41,7 +51,7 @@
       class="p-button-lg w-full h-3rem bg-white text-gray-900 text-base w-5"
       label="Delete all"
       :disabled="!favorites.length"
-      @click="removeAllFavorites"
+      @click="confirmRemoveAllFavorites"
     />
   </div>
 </template>

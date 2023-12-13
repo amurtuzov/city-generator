@@ -19,6 +19,7 @@
     </AppButton>
     <OverlayPanel
       ref="overlayPanelRef"
+      :dismissable="false"
       :style="{ width: '400px', height: '400px' }"
       :pt="{
         content: 'p-2 h-full flex flex-column gap-2 max-h-full',

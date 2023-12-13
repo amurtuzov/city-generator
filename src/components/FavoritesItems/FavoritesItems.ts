@@ -4,15 +4,19 @@ import ListItem from '@/components/ListItem/ListItem.vue'
 import { storeToRefs } from 'pinia'
 import ScrollPanel from 'primevue/scrollpanel'
 import { default as AppButton } from 'primevue/button'
+import ConfirmDialog from 'primevue/confirmdialog'
+import { useConfirm } from 'primevue/useconfirm'
 
 export default defineComponent({
   name: 'FavoritesItems',
   components: {
     ScrollPanel,
     AppButton,
+    ConfirmDialog,
     ListItem,
   },
   setup() {
+    const confirm = useConfirm()
     const favoritesStore = useFavoritesStore()
     const { favorites } = storeToRefs(favoritesStore)
 
@@ -31,15 +35,20 @@ export default defineComponent({
       document.body.removeChild(element)
     }
 
-    const removeAllFavorites = () => {
-      favoritesStore.$patch({
-        favorites: [],
+    const confirmRemoveAllFavorites = () => {
+      confirm.require({
+        message: 'Are you sure you want to delete all saved ideas?',
+        accept: () => {
+          favoritesStore.$patch({
+            favorites: [],
+          })
+        },
       })
     }
     return {
       favorites,
       downloadFavorites,
-      removeAllFavorites,
+      confirmRemoveAllFavorites,
     }
   },
 })
