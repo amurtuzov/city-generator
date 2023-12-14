@@ -1,4 +1,12 @@
-import { computed, defineComponent, nextTick, reactive, ref } from 'vue'
+import {
+  computed,
+  defineComponent,
+  nextTick,
+  onBeforeUnmount,
+  onMounted,
+  reactive,
+  ref,
+} from 'vue'
 import { default as AppButton } from 'primevue/button'
 import Dropdown from 'primevue/dropdown'
 import InputText from 'primevue/inputtext'
@@ -7,10 +15,12 @@ import ListItem from '@/components/ListItem/ListItem.vue'
 import FavoritesToggler from '@/components/FavoritesToggler/FavoritesToggler.vue'
 import { useApiCall } from '@/composables/useApiCall'
 import { citiesApiCall } from '@/api/citiesApiCall'
+import ConfirmDialog from 'primevue/confirmdialog'
 
 export default defineComponent({
   name: 'HomePage',
   components: {
+    ConfirmDialog,
     AppButton,
     InputText,
     Dropdown,
@@ -66,7 +76,7 @@ export default defineComponent({
     >(citiesApiCall, true, params)
 
     const textFieldsLatinLettersCheck = (fieldType: string) => {
-      const re = /^[A-Za-z0-9\s,]+$/
+      const re = /^[A-Za-z0-9\s,.!?:;‘'-]+$/
       if (
         params[fieldType as keyof typeof params] !== '' &&
         !re.test(params[fieldType as keyof typeof params])
@@ -90,6 +100,22 @@ export default defineComponent({
         console.error(e)
       }
     }
+
+    const confirmDialogOverlayStopPropagation = (e: Event) => {
+      const target = e.target as HTMLElement
+      if (target.classList.contains('p-dialog-mask')) {
+        e.stopImmediatePropagation()
+        e.stopPropagation()
+      }
+    }
+
+    onMounted(() => {
+      document.addEventListener('click', confirmDialogOverlayStopPropagation)
+    })
+
+    onBeforeUnmount(() => {
+      document.removeEventListener('click', confirmDialogOverlayStopPropagation)
+    })
 
     return {
       generatedItemsListRef,

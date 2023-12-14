@@ -1,5 +1,16 @@
 <template>
   <div class="home pt-8 pb-8 w-full p-5 grid grid-nogutter">
+    <ConfirmDialog group="headless" @click.stop style="width: 300px">
+      <template #container="{ message, acceptCallback, rejectCallback }">
+        <div class="bg-white flex flex-column gap-5 p-3 pt-4 border-round">
+          <span class="text-center text-gray-900">{{ message?.message }}</span>
+          <div class="flex align-items-center justify-content-end gap-2">
+            <AppButton outlined label="No" @click.stop="rejectCallback" />
+            <AppButton label="Yes" @click.stop="acceptCallback" />
+          </div>
+        </div>
+      </template>
+    </ConfirmDialog>
     <h1
       class="text-center text-gray-900 font-bold mt-0 mb-5 md:mb-6 xl:mb-7 text-6xl md:text-7xl col-12"
     >
@@ -86,8 +97,8 @@
       class="home__list m-auto pb-8 flex flex-column gap-5 col-12"
       ref="generatedItemsListRef"
     >
-      <div class="flex align-items-center justify-content-between">
-        <div class="text-lg font-bold">
+      <div class="flex align-items-center justify-content-between gap-2">
+        <div class="text-sm lg:text-lg font-bold">
           <span class="text-primary">10000+&nbsp;</span>
           <span>items in our database</span>
         </div>

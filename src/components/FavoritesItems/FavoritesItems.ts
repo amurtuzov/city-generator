@@ -4,7 +4,6 @@ import ListItem from '@/components/ListItem/ListItem.vue'
 import { storeToRefs } from 'pinia'
 import ScrollPanel from 'primevue/scrollpanel'
 import { default as AppButton } from 'primevue/button'
-import ConfirmDialog from 'primevue/confirmdialog'
 import { useConfirm } from 'primevue/useconfirm'
 
 export default defineComponent({
@@ -12,7 +11,6 @@ export default defineComponent({
   components: {
     ScrollPanel,
     AppButton,
-    ConfirmDialog,
     ListItem,
   },
   setup() {
@@ -37,6 +35,7 @@ export default defineComponent({
 
     const confirmRemoveAllFavorites = () => {
       confirm.require({
+        group: 'headless',
         message: 'Are you sure you want to delete all saved ideas?',
         accept: () => {
           favoritesStore.$patch({
@@ -45,6 +44,7 @@ export default defineComponent({
         },
       })
     }
+
     return {
       favorites,
       downloadFavorites,

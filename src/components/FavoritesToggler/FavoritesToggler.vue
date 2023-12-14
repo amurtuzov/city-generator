@@ -1,5 +1,5 @@
 <template>
-  <div class="flex justify-content-start">
+  <div class="flex justify-content-start flex-shrink-0">
     <AppButton
       @click="toggle"
       rounded
@@ -7,7 +7,10 @@
       class="bg-yellow-100 focus:shadow-none flex align-items-center gap-2 p-1 pr-3 pl-3"
     >
       <i class="pi pi-star-fill text-yellow-500 text-xl" />
-      <span class="text-base text-gray-900">Saved ideas</span>
+      <div class="text-base text-gray-900">
+        <span>Saved&nbsp;</span>
+        <span class="hidden lg:inline">ideas</span>
+      </div>
       <AppBadge
         :value="favorites.length"
         class="bg-white text-yellow-500 text-base w-2rem h-2rem flex justify-content-center align-items-center m-0"
@@ -19,7 +22,6 @@
     </AppButton>
     <OverlayPanel
       ref="overlayPanelRef"
-      :dismissable="false"
       :style="{ width: '400px', height: '400px' }"
       :pt="{
         content: 'p-2 h-full flex flex-column gap-2 max-h-full',
