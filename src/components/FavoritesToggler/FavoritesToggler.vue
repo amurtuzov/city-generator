@@ -42,7 +42,7 @@
     :pt="{
       header: 'p-3',
       content:
-        'flex flex-column justify-content-between flex-grow-1 pr-3 pl-3 pb-3 gap-4',
+        'flex flex-column justify-content-between flex-grow-1 pr-3 pl-3 pb-4 gap-3',
     }"
   >
     <FavoritesItems />

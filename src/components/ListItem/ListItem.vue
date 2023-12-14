@@ -3,7 +3,10 @@
     class="p-2 bg-primary-100 border-round text-gray-900 flex flex-row justify-content-between align-items-center"
   >
     <span>{{ item }}</span>
-    <div class="flex flex-row gap-3">
+    <div
+      class="flex flex-row gap-3 flex-grow-1 justify-content-end"
+      style="max-width: 200px"
+    >
       <AppButton
         aria-label="Copy to clipboard"
         icon="pi pi-copy"
@@ -22,7 +25,7 @@
         title="Remove from favorites"
         text
         raised
-        class="bg-white transition-all border-1 border-transparent hover:border-cyan-800 p-1 min-w-max w-2rem h-2rem focus:shadow-none"
+        class="bg-white transition-all border-1 border-transparent hover:border-cyan-800 p-1 min-w-max w-2rem h-2rem focus:shadow-none flex-shrink-0"
         iconClass="text-xl text-gray-900"
         @click="removeFromFavorites(item)"
       />
@@ -35,7 +38,7 @@
         title="Add to favorites"
         text
         raised
-        class="bg-white transition-all border-1 border-transparent hover:border-cyan-800 p-1 w-2rem h-2rem focus:shadow-none"
+        class="bg-white transition-all border-1 border-transparent hover:border-cyan-800 p-1 w-2rem h-2rem focus:shadow-none flex-shrink-0"
         @click="toggleFavorites(item)"
         :iconClass="`text-xl ${
           checkIfIncludesInFavorites(item) ? 'text-yellow-500' : 'text-gray-900'
